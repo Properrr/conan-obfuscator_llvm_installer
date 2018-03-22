@@ -39,6 +39,7 @@ class ObfuscatorLlvmInstallerConan(ConanFile):
             self.run("cmake " \
                      "-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%s " \
                      "-DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_TARGETS_TO_BUILD=X86 " \
+                     "-DCLANG_DEFAULT_CXX_STDLIB=libc++ " \
                      "%s" % (self.package_folder, os.path.join(self.source_folder, self.source_subfolder)))
             self.run("make -j%s" % tools.cpu_count())
             self.run("make install")
