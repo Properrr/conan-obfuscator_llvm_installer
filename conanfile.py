@@ -27,6 +27,10 @@ class ObfuscatorLlvmInstallerConan(ConanFile):
             self.run('tar xJf %s.tar.xz' % name)
             # need path: llvmroot/projects/libcxx
             os.rename(name, os.path.join(self.source_subfolder, 'projects', name.replace('-%s.src' % llvm_version, '')))
+        # module Obfuscation misses dependency information
+        tools.save(os.path.join(self.source_subfolder, 'lib', 'Transforms', 'Obfuscation', 'LLVMBuild.txt'),
+                   'required_libraries = Analysis Core Support TransformUtils',
+                   append=True)
 
     def build(self):
         # totally isolate source folder from build, do not even make them subfolders
